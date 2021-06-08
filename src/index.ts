@@ -6,7 +6,7 @@ import logger from "morgan";
 import bodyParser from "body-parser";
 import { createConnection } from "typeorm";
 import "dotenv/config";
-const usersRouter = require('./routes/user');
+const usersRouter = require("./routes/user");
 const playlistRouter = require("./routes/playlist");
 
 createConnection()
@@ -14,38 +14,39 @@ createConnection()
   .catch((error) => console.log("TypeORM connection error: ", error));
 
 const app = express();
-app.use(logger('dev'));
+app.use(logger("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(
   cors({
-    origin: ['https://komma.co.kr'],
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+    origin: ["https://komma.co.kr"],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
     credentials: true,
   })
 );
 
 app.use(
   session({
-    secret: '@codestates',
+    secret: "@codestates",
     resave: false,
     saveUninitialized: true,
     cookie: {
       maxAge: 24 * 6 * 60 * 10000,
       httpOnly: true,
       secure: true,
-      sameSite: 'none',
-    }
-  }));
+      sameSite: "none",
+    },
+  })
+);
 
-app.get('/', (req, res) => {
-  res.status(200).send('Success');
+app.get("/", (req, res) => {
+  res.status(200).send("Success");
 });
 
-app.use('/users', usersRouter);
-app.use('/playlist', playlistRouter);
-app.use('/sounds', express.static('./src/sounds'));
+app.use("/users", usersRouter);
+app.use("/playlist", playlistRouter);
+app.use("/sounds", express.static("./src/sounds"));
 
 const PORT = 2527;
 
