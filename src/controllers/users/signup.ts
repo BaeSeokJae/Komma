@@ -4,6 +4,7 @@ import { createSalt, createHashedPassword } from "../../utils/HashedPassword";
 
 export default async (req: Request, res: Response) => {
   const { email, password, username } = req.body;
+  console.log(req.body);
   // 필수 입력 사항이 req.body로 제대로 들어왔는지 확인
   if (!email || !password || !username) {
     res.status(422).send({ message: "insufficient parameters supplied" });
